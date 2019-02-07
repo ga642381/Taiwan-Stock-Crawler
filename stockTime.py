@@ -23,11 +23,11 @@ class stockTime():
         self.monthListPartial = []
         self.dayList = []
         
-    def addYear(self):
+    def appendYear(self):
         for year in range(self.startYear, self.endYear+1):
             self.yearList.append(str(year))
     
-    def addMonth(self):
+    def appendMonth(self):
         for i in range(12):
             month = str(i+1)
             month = month.zfill(2)
@@ -38,15 +38,15 @@ class stockTime():
             month = month.zfill(2)
             self.monthListPartial.append(month)
             
-    def addDay(self):
+    def appendDay(self):
         day = str(1)
         day = day.zfill(2)
         self.dayList.append(day)
     
-    def addDate(self):
-        self.addYear()
-        self.addMonth()
-        self.addDay()
+    def appendDate(self):
+        self.appendYear()
+        self.appendMonth()
+        self.appendDay()
         
         currentYear = str(CURRENTYEAR)
         currnetMonth = str(CURRENTMONTH).zfill(2)
@@ -60,6 +60,6 @@ class stockTime():
             self.dateList.append(currentYear+month+day)
         
     def getDateList(self):
-        self.addDate()
+        self.appendDate()
         dateList = self.dateList
         return dateList

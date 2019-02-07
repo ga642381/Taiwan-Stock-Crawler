@@ -4,19 +4,33 @@ import time
 import random
 from stockCode import stockCode
 from stockURL import stockURL
-from stockTime import stockTime
 
-class Crawler():
-    def __init__(self):
-        #self.processNumber = 2        
+class Crawler_CSV():
+    def __init__(self,fname):    
         self.stockCSVBaseDir = './stockCSV'
+        
         self.stockCode = stockCode()
         self.stockURL = stockURL()
-        self.stockTime = stockTime()
-        self.fname = ''
-    
-    def createUrlFiles(self):
-        self.stockURL.writeURLs(self.fname)
+        
+        self.fname = fname
+        print('*<{} Crawler>  has been created'.format(self.fname))
+        
+    def craw(self):
+        self.createStockCodeFiles()
+        self.createStockUrlFiles()
+        
+        STOCKCODES = self.stockCode.stockCodeListDic[self.fname]
+        print('*following {} Stocks will be crawled'.format(len(STOCKCODES)))
+        print(STOCKCODES,'\n')
+        self.downloadCSV()
+        
+        
+    def createStockCodeFiles(self):        
+        self.stockCode.writeStockCodes(self.fname)
+        
+    def createStockUrlFiles(self):
+        stockCodeList = self.stockCode.getStockCodeList(self.fname)
+        self.stockURL.writeURLs(self.fname,stockCodeList)
     
     def downloadCSV(self):
         urlBaseDir = os.path.join(self.stockURL.stockUrlBaseDir,self.fname) 
@@ -56,12 +70,6 @@ class Crawler():
                         #sleepTime = random.uniform(5,10)
                         time.sleep(20)
         
-    def craw(self,fname):
-        self.fname = fname
-        self.createUrlFiles()
-        STOCKCODES = self.stockURL.stockCode.stockCodeListDic[fname]
-        print('*following {} Stocks will be crawled'.format(len(STOCKCODES)))
-        print(STOCKCODES,'\n')
-        self.downloadCSV()
+
 
     
