@@ -52,8 +52,9 @@ class Crawler_CSV():
                 os.makedirs(folderPath)
         
         #download CSV file from TWSE:        
+        N = 0 
         for file in fileList:
-            fileUrlPath = os.path.join(urlBaseDir,file)
+            fileUrlPath = os.path.join(urlBaseDir,file)            
             with open(fileUrlPath,'r') as urlf:
                 for line in urlf:
                     date = line[:8]
@@ -61,14 +62,22 @@ class Crawler_CSV():
                     url = url.strip('\n')                    
                     
                     folder = os.path.join(self.stockCSVBaseDir,self.fname,file)
-                    csvPath = os.path.join(folder,date+'.csv')                    
+                    csvPath = os.path.join(folder,date+'.csv')            
+                    
                     if not os.path.exists(csvPath):
-                        response = requests.get(url) ####try to make a connection
+                        s = requests.Session()
+                        s.keep_alive = False                        
+                        response = s.get(url)  
                         with open(csvPath,'w') as f:
-                            f.write(response.text)
-                        print(file,':',date)
+                            f.write(response.text)                            
+                        if N%20==0:
+                            print('      代號', ':','日期','      status')
+                        strN = str(N).zfill(3)
+                        print(strN,'|',file,':',date,'  ',response.status_code)
                         #sleepTime = random.uniform(5,10)
-                        time.sleep(20)
+                        time.sleep(10)
+                        del s
+                        N+=1
         
 
 
