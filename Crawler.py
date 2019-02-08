@@ -13,7 +13,7 @@ class Crawler_CSV():
         self.stockURL = stockURL()
         
         self.fname = fname
-        print('*<{} Crawler>  has been created'.format(self.fname))
+        print('*<{} Crawler>  has been created'.format(self.fname),'\n')
         
     def craw(self):
         self.createStockCodeFiles()
@@ -64,21 +64,36 @@ class Crawler_CSV():
                     folder = os.path.join(self.stockCSVBaseDir,self.fname,file)
                     csvPath = os.path.join(folder,date+'.csv')            
                     
-                    if not os.path.exists(csvPath):
-                        s = requests.Session()
-                        s.keep_alive = False                        
-                        response = s.get(url)  
-                        with open(csvPath,'w') as f:
-                            f.write(response.text)                            
-                        if N%20==0:
-                            print('      代號', ':','日期','      status')
-                        strN = str(N).zfill(3)
-                        print(strN,'|',file,':',date,'  ',response.status_code)
-                        #sleepTime = random.uniform(5,10)
-                        time.sleep(10)
-                        del s
-                        N+=1
-        
+                    if not os.path.exists(csvPath):                        
+                        try:
+                            self.Download(csvPath,file,date,url,N)
+                            N = N+1
+                        except:
+                            try:
+                                print('try again after 30 seconds...')
+                                time.sleep(30)
+                                self.Download(csvPath,file,date,url,N)
+                                N = N+1
+                            except:
+                                print('try again after 30 seconds...')
+                                time.sleep(30)
+                                self.Download(csvPath,file,date,url,N)
+                                N = N+1
+                        
+                            
+    def Download(self,csvPath,file,date,url,N):
+        s = requests.Session()
+        s.keep_alive = False  
+        response = s.get(url)  
+        with open(csvPath,'w') as f:
+            f.write(response.text)
+        if N%20==0:
+            print('      代號', ':','日期','      status')
+        strN = str(N).zfill(3)
+        print(strN,'|',file,':',date,'  ',response.status_code)
+        #sleepTime = random.uniform(5,10)
+        time.sleep(5)
+        del s
 
 
     
