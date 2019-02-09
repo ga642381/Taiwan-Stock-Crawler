@@ -4,10 +4,13 @@ import time
 import random
 from stockCode import stockCode
 from stockURL import stockURL
+import configparser
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 class Crawler_CSV():
     def __init__(self,fname):    
-        self.stockCSVBaseDir = './stockCSV'
+        self.stockCSVBaseDir = config['PATH']['STOCKCSV_BASEDIR']
         
         self.stockCode = stockCode()
         self.stockURL = stockURL()
