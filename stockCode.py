@@ -2,14 +2,17 @@ import os
 import re
 from lxml import etree 
 import requests
+import configparser
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 class stockCode():    
     def __init__(self):
         #dictionary {fname: list}
-        self.stockCodeListDic = {'wanted':[],'Taiwan 50':[],'Taiwan Dividend':[]}
+        self.stockCodeListDic = {'wanted':[],'Taiwan-50':[],'Taiwan-Dividend':[]}
         
         #create BaseDir
-        self.stockCodeBaseDir = './stockCode' 
+        self.stockCodeBaseDir = config['PATH']['STOCKCODE_BASEDIR']
         if not os.path.exists(self.stockCodeBaseDir):
             os.makedirs(self.stockCodeBaseDir)
             print('*dir : ',self.stockCodeBaseDir,'  has been created')
@@ -51,9 +54,9 @@ class stockCode():
                 
     def crawlStockCode(self,fname):        
         CODE = False
-        if fname == 'Taiwan 50':
+        if fname == 'Taiwan-50':
             CODE = '0050'
-        elif fname =='Taiwan Dividend':
+        elif fname =='Taiwan-Dividend':
             CODE = '0056'
         if not CODE: return
         

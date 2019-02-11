@@ -79,12 +79,12 @@ class dataBaseManager():
                             dateExist = re.findall('[0-9]+\/[0-9]+\/[0-9]+',line)
                             if dateExist:                        
                                 #2.convert the year from "Republic Era" to "A.D. 
-                                if line.startswith("\" 99"):           
+                                if line.startswith("\" 9") or line.startswith("\" 8"):
                                     date = line[2:10]            
                                     year = int(date[0:2])
                                     ADyear = year+1911
                                     ADdate = date.replace(str(year),str(ADyear))
-                                    line = line.replace(date,ADdate)
+                                    line = line.replace(" "+date,ADdate)
                                 elif line.startswith("\"1"):
                                     date = line[1:10]            
                                     year = int(date[0:3])

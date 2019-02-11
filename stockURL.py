@@ -1,5 +1,8 @@
 import os
 from stockTime import stockTime
+import configparser
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 class stockURL():
     def __init__(self):
@@ -9,7 +12,7 @@ class stockURL():
         self.stockCodeList = []        
 
         self.stockTime = stockTime()
-        self.stockUrlBaseDir = './stockURL'
+        self.stockUrlBaseDir = config['PATH']['STOCKURL_BASEDIR']
         
         
     def writeURLs(self,fname,stockCodeList):
