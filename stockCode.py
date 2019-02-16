@@ -8,8 +8,8 @@ config.read('config.ini')
 
 class stockCode():    
     def __init__(self):
-        #dictionary {fname: list}
-        self.stockCodeListDic = {'wanted':[],'Taiwan-50':[],'Taiwan-Dividend':[]}
+        #dictionary {option: list}
+        self.stockCodeListDic = {'custom':[],'Taiwan-50':[],'Taiwan-Dividend':[]}
         
         #create BaseDir
         self.stockCodeBaseDir = config['PATH']['STOCKCODE_BASEDIR']
@@ -17,46 +17,46 @@ class stockCode():
             os.makedirs(self.stockCodeBaseDir)
             print('*dir : ',self.stockCodeBaseDir,'  has been created')
     
-    def writeStockCodes(self,fname):    
+    def writeStockCodes(self,option):    
         
         #get stockCodelist
-        self.appendStockCode(fname)
-        fnamePath = os.path.join(self.stockCodeBaseDir,fname)
-        with open(fnamePath,'w') as f:
-            for stockCode in self.stockCodeListDic[fname]:
+        self.appendStockCode(option)
+        optionPath = os.path.join(self.stockCodeBaseDir,option)
+        with open(optionPath,'w') as f:
+            for stockCode in self.stockCodeListDic[option]:
                 f.write(stockCode)
                 f.write('\n')    
                 
-    def getStockCodeList(self,fname):  
-        stockCodeList= self.stockCodeListDic[fname]
+    def getStockCodeList(self,option):  
+        stockCodeList= self.stockCodeListDic[option]
         return stockCodeList
         
         
     
     
     
-    #One should manually add the wanted stock code to /stockCode/wanted file   
+    #One should manually add the custom stock code to config.ini file  
     #Taiwan 50          Stock Codes will be automatically crawled
     #Taiwan Dividend    Stock Codes will be automatically crawled
-    def appendStockCode(self,fname):        
+    def appendStockCode(self,option):        
         #if there's no history data
-        if not os.path.exists(os.path.join(self.stockCodeBaseDir,fname)):
-            self.crawlStockCode(fname)
-            #self.writeStockCodes(fname)      
+        if not os.path.exists(os.path.join(self.stockCodeBaseDir,option)):
+            self.crawlStockCode(option)
+            #self.writeStockCodes(option)      
             
         #if there's history data, directly get the stockCode from it
         else:
-            path = os.path.join(self.stockCodeBaseDir,fname)             
+            path = os.path.join(self.stockCodeBaseDir,option)             
             with open(path,'r') as f:
                 for line in f:
                     line=line.strip('\n') #strip the EOL symbol
-                    self.stockCodeListDic[fname].append(line)# add each stockCode to the list 
+                    self.stockCodeListDic[option].append(line)# add each stockCode to the list 
                 
-    def crawlStockCode(self,fname):        
+    def crawlStockCode(self,option):        
         CODE = False
-        if fname == 'Taiwan-50':
+        if option == 'Taiwan-50':
             CODE = '0050'
-        elif fname =='Taiwan-Dividend':
+        elif option =='Taiwan-Dividend':
             CODE = '0056'
         if not CODE: return
         
@@ -70,7 +70,7 @@ class stockCode():
         TabBx = etree.tostring(TabBx[0],pretty_print=True, method="html").decode('utf-8')
         profileNNNN = re.findall('profile\/[0-9]*',TabBx)        
         for element in profileNNNN:
-            self.stockCodeListDic[fname].append(element[-4:])            
+            self.stockCodeListDic[option].append(element[-4:])            
         
 
     

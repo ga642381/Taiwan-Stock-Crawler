@@ -15,17 +15,17 @@ class stockURL():
         self.stockUrlBaseDir = config['PATH']['STOCKURL_BASEDIR']
         
         
-    def writeURLs(self,fname,stockCodeList):
+    def writeURLs(self,option,stockCodeList):
         #create UrlBaseDir
-        fnameUrlBaseDir = os.path.join(self.stockUrlBaseDir,fname)
-        if not os.path.exists(fnameUrlBaseDir):
-            os.makedirs(fnameUrlBaseDir)
-            print('*dir : ',fnameUrlBaseDir,'  has been created')
+        optionUrlBaseDir = os.path.join(self.stockUrlBaseDir,option)
+        if not os.path.exists(optionUrlBaseDir):
+            os.makedirs(optionUrlBaseDir)
+            print('*dir : ',optionUrlBaseDir,'  has been created')
         
         timeList = self.stockTime.getDateList() 
               
         for NNNN in stockCodeList:
-            path = os.path.join(fnameUrlBaseDir,NNNN)
+            path = os.path.join(optionUrlBaseDir,NNNN)
             with open(path,'w') as f:  
                 for YYYYmmdd in timeList:
                     url = self.url

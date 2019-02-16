@@ -9,38 +9,38 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 class Crawler_CSV():
-    def __init__(self,fname):    
+    def __init__(self,option):    
         self.stockCSVBaseDir = config['PATH']['STOCKCSV_BASEDIR']
         
         self.stockCode = stockCode()
         self.stockURL = stockURL()
         
-        self.fname = fname
-        print('*<{} Crawler>  has been created'.format(self.fname),'\n')
+        self.option = option
+        print('*<{} Crawler>  has been created'.format(self.option),'\n')
         
     def craw(self):
         self.createStockCodeFiles()
         self.createStockUrlFiles()
         
-        STOCKCODES = self.stockCode.stockCodeListDic[self.fname]
+        STOCKCODES = self.stockCode.stockCodeListDic[self.option]
         print('*following {} Stocks will be crawled'.format(len(STOCKCODES)))
         print(STOCKCODES,'\n')
         self.downloadCSV()
         
         
     def createStockCodeFiles(self):        
-        self.stockCode.writeStockCodes(self.fname)
+        self.stockCode.writeStockCodes(self.option)
         
     def createStockUrlFiles(self):
-        stockCodeList = self.stockCode.getStockCodeList(self.fname)
-        self.stockURL.writeURLs(self.fname,stockCodeList)
+        stockCodeList = self.stockCode.getStockCodeList(self.option)
+        self.stockURL.writeURLs(self.option,stockCodeList)
     
     def downloadCSV(self):
-        urlBaseDir = os.path.join(self.stockURL.stockUrlBaseDir,self.fname) 
+        urlBaseDir = os.path.join(self.stockURL.stockUrlBaseDir,self.option) 
         fileList = os.listdir(urlBaseDir)
         
-        #./stockUrlBaseDir/fname/NNNN
-        #./stockCSVBaseDir/fname/NNNN
+        #./stockUrlBaseDir/option/NNNN
+        #./stockCSVBaseDir/option/NNNN
         
         
         #create stockCSV basedir
@@ -48,9 +48,9 @@ class Crawler_CSV():
             os.makedirs(self.stockCSVBaseDir)
             print('*dir : ',self.stockCSVBaseDir,'  has been created')
         
-        #create folders for different stockCode in different fname
+        #create folders for different stockCode in different option
         for file in fileList:
-            folderPath = os.path.join(self.stockCSVBaseDir,self.fname,file)
+            folderPath = os.path.join(self.stockCSVBaseDir,self.option,file)
             if not os.path.exists(folderPath):
                 os.makedirs(folderPath)
         
@@ -64,7 +64,7 @@ class Crawler_CSV():
                     url = line[8:]
                     url = url.strip('\n')                    
                     
-                    folder = os.path.join(self.stockCSVBaseDir,self.fname,file)
+                    folder = os.path.join(self.stockCSVBaseDir,self.option,file)
                     csvPath = os.path.join(folder,date+'.csv')            
                     
                     if not os.path.exists(csvPath):                        

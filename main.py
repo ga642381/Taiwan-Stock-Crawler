@@ -1,17 +1,19 @@
 from Crawler import Crawler_CSV
 from dataBaseManager import dataBaseManager
-#fname : 'wanted','Taiwan-50','Taiwan-Dividend'
-fname = 'Taiwan-Dividend'
-fnames = ['Taiwan-50','Taiwan-Dividend']
+import configparser
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+#option : 'custom','Taiwan-50','Taiwan-Dividend'
+options = config['USER']['OPTION'].split(',')
 
 
 if __name__ == '__main__': 
-    for fname in fnames:
-        Crawler_CSV = Crawler_CSV(fname)        
+    for option in options:
+        Crawler = Crawler_CSV(option)        
         Crawler_CSV.craw()
+        del Crawler
         
-        '''
         dataBaseManager = dataBaseManager()
-        dataBaseManager.mergeCSV(fname)
-        dataBaseManager.cleanData(fname)
-        '''
+        dataBaseManager.mergeCSV(option)
+        dataBaseManager.cleanData(option)

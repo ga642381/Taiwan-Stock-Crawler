@@ -8,19 +8,19 @@ class dataBaseManager():
     def __init__(self):
         self.stockCSVBaseDir = config['PATH']['STOCKCSV_BASEDIR']
     
-    def mergeCSV(self,fname):        
-        CSVFnameDir = os.path.join(self.stockCSVBaseDir,fname)
+    def mergeCSV(self,option):        
+        CSVoptionDir = os.path.join(self.stockCSVBaseDir,option)
         
         
-        allDir = os.path.join(CSVFnameDir,'ALL')
+        allDir = os.path.join(CSVoptionDir,'ALL')
         if not os.path.exists(allDir):
             os.makedirs(allDir)        
         
-        stockCodes = os.listdir(CSVFnameDir)
+        stockCodes = os.listdir(CSVoptionDir)
         stockCodes.remove('ALL')
         
         for stockCode in stockCodes:            
-            historyCSVDir = os.path.join(CSVFnameDir,stockCode)
+            historyCSVDir = os.path.join(CSVoptionDir,stockCode)
             allCSVPath = os.path.join(allDir,stockCode+'.csv')            
             with open(allCSVPath,'w') as F:                
                 historyCSVs = os.listdir(historyCSVDir)
@@ -56,12 +56,12 @@ class dataBaseManager():
     #1.delete the 10th column(redundant) 
     #2.convert the year from "Republic Era" to "A.D. 
     #3.delete some useless information"
-    def cleanData(self,fname):
-        CSVFnameDir = os.path.join(self.stockCSVBaseDir,fname)
-        stockCodes = os.listdir(CSVFnameDir)
+    def cleanData(self,option):
+        CSVoptionDir = os.path.join(self.stockCSVBaseDir,option)
+        stockCodes = os.listdir(CSVoptionDir)
 
         for stockCode in stockCodes:
-            historyCSVDir = os.path.join(CSVFnameDir,stockCode)
+            historyCSVDir = os.path.join(CSVoptionDir,stockCode)
             historyCSVs = os.listdir(historyCSVDir)
             historyCSVs.sort()
             for historyCSV in historyCSVs:
