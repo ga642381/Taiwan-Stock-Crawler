@@ -15,12 +15,16 @@ class stockURL():
         self.stockUrlBaseDir = config['PATH']['STOCKURL_BASEDIR']
         
         
+        if not os.path.exists(self.stockUrlBaseDir):
+            os.makedirs(self.stockUrlBaseDir)
+            print('[DIR] ',self.stockUrlBaseDir,'  has been created')
+        
     def writeURLs(self,option,stockCodeList):
         #create UrlBaseDir
         optionUrlBaseDir = os.path.join(self.stockUrlBaseDir,option)
         if not os.path.exists(optionUrlBaseDir):
             os.makedirs(optionUrlBaseDir)
-            print('*dir : ',optionUrlBaseDir,'  has been created')
+            print('[DIR] ',optionUrlBaseDir,'  has been created')
         
         timeList = self.stockTime.getDateList() 
               

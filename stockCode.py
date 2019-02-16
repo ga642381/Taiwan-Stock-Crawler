@@ -15,7 +15,8 @@ class stockCode():
         self.stockCodeBaseDir = config['PATH']['STOCKCODE_BASEDIR']
         if not os.path.exists(self.stockCodeBaseDir):
             os.makedirs(self.stockCodeBaseDir)
-            print('*dir : ',self.stockCodeBaseDir,'  has been created')
+            print('[DIR] ',self.stockCodeBaseDir,'  has been created')
+
     
     def writeStockCodes(self,option):    
         
@@ -35,14 +36,19 @@ class stockCode():
     
     
     
-    #One should manually add the custom stock code to config.ini file  
+    #One should manually add the custom stock code in config.ini file  
     #Taiwan 50          Stock Codes will be automatically crawled
     #Taiwan Dividend    Stock Codes will be automatically crawled
     def appendStockCode(self,option):        
+        if option == 'custom':            
+            self.stockCodeListDic[option] = config['USER']['CUSTOM'].split(',')
+        else:
+            self.crawlStockCode(option)
+            
+        ''' The composed securities might change, so we should crawl it every time
         #if there's no history data
         if not os.path.exists(os.path.join(self.stockCodeBaseDir,option)):
-            self.crawlStockCode(option)
-            #self.writeStockCodes(option)      
+            self.crawlStockCode(option)    
             
         #if there's history data, directly get the stockCode from it
         else:
@@ -51,7 +57,7 @@ class stockCode():
                 for line in f:
                     line=line.strip('\n') #strip the EOL symbol
                     self.stockCodeListDic[option].append(line)# add each stockCode to the list 
-                
+        '''    
     def crawlStockCode(self,option):        
         CODE = False
         if option == 'Taiwan-50':

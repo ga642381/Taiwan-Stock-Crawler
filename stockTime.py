@@ -1,4 +1,5 @@
 import datetime
+import configparser
 config = configparser.ConfigParser()
 config.read('config.ini')
 
@@ -12,8 +13,8 @@ class stockTime():
     def __init__(self):
         self.dateList = []       
         #begining of the query time
-        self.startYear = config['USER']['STARTYEAR']
-        self.startMonth = config['USER']['STARTTIME']
+        self.startYear = int(config['USER']['STARTYEAR'])
+        self.startMonth = int(config['USER']['STARTTIME'])
         
         #end of the query time, default is 'so far'
         self.endYear = CURRENTYEAR       

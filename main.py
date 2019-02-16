@@ -11,7 +11,7 @@ options = config['USER']['OPTION'].split(',')
 if __name__ == '__main__': 
     for option in options:
         Crawler = Crawler_CSV(option)        
-        Crawler_CSV.craw()
+        Crawler.craw()
         del Crawler
         
         dataBaseManager = dataBaseManager()

@@ -9,22 +9,30 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 class Crawler_CSV():
-    def __init__(self,option):    
+    def __init__(self,option):  
+        self.option = option
         self.stockCSVBaseDir = config['PATH']['STOCKCSV_BASEDIR']
+        print('<<{} Crawler>>'.format(self.option))
+        
+        #create stockCSV basedir
+        if not os.path.exists(self.stockCSVBaseDir):
+            os.makedirs(self.stockCSVBaseDir)
+            print('[DIR] ',self.stockCSVBaseDir,'  has been created')
+        
         
         self.stockCode = stockCode()
         self.stockURL = stockURL()
         
-        self.option = option
-        print('*<{} Crawler>  has been created'.format(self.option),'\n')
+        
+        
         
     def craw(self):
         self.createStockCodeFiles()
         self.createStockUrlFiles()
         
         STOCKCODES = self.stockCode.stockCodeListDic[self.option]
-        print('*following {} Stocks will be crawled'.format(len(STOCKCODES)))
-        print(STOCKCODES,'\n')
+        print('[Stock List]' ,'{} Stocks will be crawled'.format(len(STOCKCODES)))
+        print('==>',STOCKCODES,'\n')
         self.downloadCSV()
         
         
@@ -41,12 +49,7 @@ class Crawler_CSV():
         
         #./stockUrlBaseDir/option/NNNN
         #./stockCSVBaseDir/option/NNNN
-        
-        
-        #create stockCSV basedir
-        if not os.path.exists(self.stockCSVBaseDir):
-            os.makedirs(self.stockCSVBaseDir)
-            print('*dir : ',self.stockCSVBaseDir,'  has been created')
+
         
         #create folders for different stockCode in different option
         for file in fileList:

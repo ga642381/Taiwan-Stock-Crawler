@@ -51,7 +51,7 @@ class dataBaseManager():
                                 if dateExist:
                                     F.write(line)
         
-        print('\n*All the csv files of each stock have been merged')
+        print('\nAll the csv files of each stock have been merged')
     
     #1.delete the 10th column(redundant) 
     #2.convert the year from "Republic Era" to "A.D. 
