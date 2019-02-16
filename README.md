@@ -13,7 +13,7 @@ The crawled csv file include daily inforamtion : 'Date', 'Trade Volume', 'Trade 
  ```bash 
  python main.py 
  ```
-資料將儲存在stockCSV資料夾下
+資料將儲存在stockCSV資料夾下,有每個月份的CSV檔,最後每支股票也會有一個合併後的歷史資料,儲存在ALL資料夾內。
 
 
 ## Config File (config.ini)
