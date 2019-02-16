@@ -14,7 +14,7 @@ class stockTime():
         self.dateList = []       
         #begining of the query time
         self.startYear = int(config['USER']['STARTYEAR'])
-        self.startMonth = int(config['USER']['STARTTIME'])
+        self.startMonth = int(config['USER']['STARTMONTH'])
         
         #end of the query time, default is 'so far'
         self.endYear = CURRENTYEAR       
