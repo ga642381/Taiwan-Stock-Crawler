@@ -22,3 +22,11 @@ The crawled csv file include daily inforamtion : 'Date', 'Trade Volume', 'Trade 
 * 'custom'          :  使用者自訂
 * 'Taiwan-50'       :  元大台灣50(0050)的50支成份股
 * 'Taiwan-Dividend' :  元大高股息(0056)的30支成份股
+
+Configuration:<br/>
+
+[USER]
+* OPTION    -> custom, Taiwan-50, Taiwan-Dividend （可選擇一項或多項,以逗號（,）隔開）
+* CUSTOM    -> 若OPTION有選custom,在這個欄位輸入欲爬取的股票代號（以逗號（,）隔開）
+* STARTYEAR -> 開始爬取的年份
+* STARTMONTH-> 開始爬取的月份
