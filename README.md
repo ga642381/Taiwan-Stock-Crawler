@@ -23,7 +23,8 @@ The crawled csv file include daily inforamtion : 'Date', 'Trade Volume', 'Trade 
 * 'Taiwan-50'       :  元大台灣50(0050)的50支成份股
 * 'Taiwan-Dividend' :  元大高股息(0056)的30支成份股
 
-Configuration:<br/>
+
+### Configuration:
 
 [USER]
 * OPTION    -> custom, Taiwan-50, Taiwan-Dividend （可選擇一項或多項,以逗號（,）隔開）
