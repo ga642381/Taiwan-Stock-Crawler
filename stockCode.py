@@ -2,6 +2,7 @@ import os
 import re
 from lxml import etree 
 import requests
+import html
 import configparser
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -10,7 +11,7 @@ class stockCode():
     def __init__(self):
         #dictionary {option: list}
         self.stockCodeListDic = {'custom':[],'Taiwan-50':[],'Taiwan-Dividend':[]}
-        
+        self.stockNameDic = {'custom':{},'Taiwan-50':{},'Taiwan-Dividend':{}}
         #create BaseDir
         self.stockCodeBaseDir = config['PATH']['STOCKCODE_BASEDIR']
         if not os.path.exists(self.stockCodeBaseDir):
@@ -31,7 +32,10 @@ class stockCode():
     def getStockCodeList(self,option):  
         stockCodeList= self.stockCodeListDic[option]
         return stockCodeList
-        
+    
+    def getStockNameDic(self,option):
+        stockNameDic = self.stockNameDic[option]
+        return stockNameDic
         
     
     
@@ -74,10 +78,17 @@ class stockCode():
         
         TabBx = tree.xpath('//div[@class="TabBx"]') #hrefList = tree.xpath('//div[@class="TabBx"]/div[@class="tab"]//a')
         TabBx = etree.tostring(TabBx[0],pretty_print=True, method="html").decode('utf-8')
-        profileNNNN = re.findall('profile\/[0-9]*',TabBx)        
-        for element in profileNNNN:
-            self.stockCodeListDic[option].append(element[-4:])            
+        profileNNNN = re.findall('profile\/[0-9]*',TabBx) 
         
+        for element in profileNNNN:
+            href = re.findall('\<a.*{}.*\<\/a\>'.format(element),TabBx)[0]
+            entities = re.findall('\>.*\<',href)[0].replace(" ","")[1:-1]
+            chineseName = html.unescape(entities)
+            
+            code = element[-4:]
+            self.stockCodeListDic[option].append(code)            
+            self.stockNameDic[option][code] = chineseName
+            
 
     
 

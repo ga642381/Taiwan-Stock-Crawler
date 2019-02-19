@@ -30,9 +30,17 @@ class Crawler_CSV():
         self.createStockCodeFiles()
         self.createStockUrlFiles()
         
-        STOCKCODES = self.stockCode.stockCodeListDic[self.option]
-        print('[Stock List]' ,'{} Stocks will be crawled'.format(len(STOCKCODES)))
-        print('==>',STOCKCODES,'\n')
+        STOCKCODES = self.stockCode.getStockCodeList(self.option)
+        STOCKNAMEDIC = self.stockCode.getStockNameDic(self.option)        
+        print('[Stock List]' ,'{} Stocks will be crawled:'.format(len(STOCKCODES)))        
+        print('{}| {}  : {}'.format('No.','代號','名稱'))
+        print('------------------')
+        for i in range(len(STOCKCODES)):
+            code = STOCKCODES[i]
+            name = STOCKNAMEDIC[code]  
+            number = str(i+1).zfill(2)
+            print('{}.| {}  : {}'.format(number,code,name))
+        print('\n\n')
         self.downloadCSV()
         
         
