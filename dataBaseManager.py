@@ -34,8 +34,8 @@ class dataBaseManager():
                         gotFirstFile  = True
                         with open(historyCSVPath,'r') as f:
                             lines = f.readlines()
-                            if lines[0].startswith("\"日期\""):
-                                fieldLine = lines[0]
+                            if lines[1].startswith("\"日期\""):
+                                fieldLine = lines[1]
                                 F.write(fieldLine)
                             for line in lines:
                                 dateExist = re.findall('[0-9]+\/[0-9]+\/[0-9]+',line)
