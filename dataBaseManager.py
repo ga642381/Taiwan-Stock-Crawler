@@ -69,10 +69,9 @@ class dataBaseManager():
                 if os.stat(historyCSVPath).st_size > 3: #check if the file is empty
                     with open(historyCSVPath,'r') as f:                    
                             lines = f.readlines()
-                            if lines[1].startswith("\"日期\""):
-                                lines[1] = lines[1].replace(',\n','\n') #1.delete the 10th column(redundant) 
-                                lines = lines[1:]#3.delete some useless information"
-                        
+                            if lines[0].startswith("\"日期\""):
+                                lines[0] = lines[0].replace(',\n','\n') #1.delete the 10th column(redundant) 
+                                
                     with open(historyCSVPath,'w') as f:
                         f.write(lines[0])
                         for line in lines[1:]:
