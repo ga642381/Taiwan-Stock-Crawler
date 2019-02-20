@@ -6,6 +6,7 @@ The crawled csv file include daily inforamtion : 'Date', 'Trade Volume', 'Trade 
 
 ＊『個股日成交資訊』以CSV檔儲存，包含：「日期」、「成交股數」、「成交金額」、「開盤價」、「最高價」、「收盤價」、「漲跌價差」、「成交筆數」
 
+ ![image](https://github.com/ga642381/Taiwan-Stock-Crawler/blob/master/github_material/data_description.png?raw=true)
 ## Get Started
 
 修改config.ini ( 預設為爬取2010年1月至今「台灣50(0050)」的50支成份股之「個股日成交資訊」)
