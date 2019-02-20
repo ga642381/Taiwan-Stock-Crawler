@@ -40,7 +40,8 @@ class Crawler_CSV():
             name = STOCKNAMEDIC[code]  
             number = str(i+1).zfill(2)
             print('{}.| {}  : {}'.format(number,code,name))
-        print('\n\n')
+        print('\n')
+        print('Crawling......\n')
         self.downloadCSV()
         
         
